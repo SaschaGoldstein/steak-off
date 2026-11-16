@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="Steak Off · Sascha levelt up">
+<meta property="og:description" content="Blinde steak tasting op 28 november. Druk op start en schrijf je in.">
+<title>Sascha's Steak Off</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Monoton&family=Press+Start+2P&family=Chakra+Petch:wght@400;600;700&display=swap">
+<style>
+/* Layout: neon arcade cabinet. Deliberately single dark theme: tube-glow pink and cyan on night purple, a Pac-Man Sascha chasing a steak around the screen edge. */
+:root{
+  --bg:#0b0614; --panel:#150a26; --panel2:#1d0f33; --ink:#f6efff; --muted:#b4a6d1;
+  --pink:#ff2bd6; --cyan:#19f0ff; --yellow:#ffe94a; --lime:#8dff3a; --red:#ff3b5c;
+  --neon:"Monoton","Impact",sans-serif; --arcade:"Press Start 2P",ui-monospace,monospace; --body:"Chakra Petch",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.55;overflow-x:hidden;
+  background-image:radial-gradient(ellipse at 50% -10%,rgba(255,43,214,.22),transparent 55%),radial-gradient(ellipse at 100% 60%,rgba(25,240,255,.10),transparent 50%)}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main.wrap{display:flex;flex-direction:column;gap:40px;padding-block:32px 96px}
+p{margin:0}
+h2,h3{margin:0;text-wrap:balance}
+h2{font-family:var(--arcade);font-size:clamp(1.05rem,4.6vw,1.5rem);line-height:1.35;color:var(--yellow);text-shadow:0 0 6px rgba(255,233,74,.8),0 0 22px rgba(255,233,74,.35);text-transform:uppercase}
+h3{font-family:var(--arcade);font-size:.8rem;line-height:1.5;color:var(--cyan);text-transform:uppercase;letter-spacing:.04em;text-shadow:0 0 8px rgba(25,240,255,.6)}
+.lede{font-size:1.15rem;max-width:56ch}
+.note{color:var(--muted);font-size:.92rem}
+.glow-pink{color:var(--pink);text-shadow:0 0 4px #fff,0 0 10px var(--pink),0 0 28px var(--pink),0 0 60px rgba(255,43,214,.6)}
+.glow-cyan{color:var(--cyan);text-shadow:0 0 4px #fff,0 0 10px var(--cyan),0 0 28px var(--cyan)}
+
+/* hero */
+header{position:relative;overflow:hidden;padding-block:40px 0}
+header .wrap{display:flex;flex-direction:column;gap:22px;align-items:flex-start;position:relative;z-index:1}
+.insert{font-family:var(--arcade);font-size:.72rem;color:var(--cyan);text-shadow:0 0 8px var(--cyan);animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:.15}}
+h1{font-family:var(--neon);font-weight:400;font-size:clamp(4rem,19vw,8.6rem);line-height:.92;margin:0;letter-spacing:.02em}
+h1 .l1{display:block}
+h1 .l2{display:block;color:var(--cyan);text-shadow:0 0 4px #fff,0 0 12px var(--cyan),0 0 34px var(--cyan),0 0 70px rgba(25,240,255,.5);animation:flicker 4.5s infinite}
+@keyframes flicker{0%,18%,22%,62%,64%,100%{opacity:1}20%,63%{opacity:.35}}
+.levelup{font-family:var(--arcade);font-size:clamp(.8rem,3.4vw,1rem);line-height:1.6;color:var(--yellow);text-shadow:0 0 10px rgba(255,233,74,.7)}
+.grid-floor{position:relative;height:120px;margin-top:-10px;background:
+  linear-gradient(var(--bg),transparent 30%),
+  repeating-linear-gradient(90deg,rgba(255,43,214,.55) 0 2px,transparent 2px 60px),
+  repeating-linear-gradient(0deg,rgba(255,43,214,.55) 0 2px,transparent 2px 24px);
+  transform:perspective(220px) rotateX(55deg);transform-origin:top;opacity:.55;mask-image:linear-gradient(transparent,#000 40%)}
+.player{display:flex;gap:16px;align-items:center;border:2px solid var(--cyan);background:rgba(21,10,38,.85);padding:12px 18px 12px 12px;
+  box-shadow:0 0 14px rgba(25,240,255,.45),inset 0 0 14px rgba(25,240,255,.15);max-width:100%}
+.player img{width:64px;height:64px;border-radius:50%;border:3px solid var(--yellow);box-shadow:0 0 14px var(--yellow);flex:none;object-fit:cover}
+.player .p1{font-family:var(--arcade);font-size:.62rem;color:var(--pink);text-shadow:0 0 8px var(--pink);display:block;margin-bottom:6px}
+.player b{font-family:var(--arcade);font-size:.9rem;display:block;line-height:1.4}
+.player small{color:var(--muted)}
+.cta{display:flex;flex-wrap:wrap;gap:14px}
+
+/* ticket */
+.ticket{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ticket .where{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:14px 20px;align-items:center;justify-content:space-between}
+.ticket .where>div{min-width:0}
+.ticket .street{font-size:1.45rem;line-height:1.2;overflow-wrap:anywhere}
+.ticket .city{display:block;font-family:var(--arcade);font-size:.72rem;color:var(--cyan);text-shadow:0 0 8px rgba(25,240,255,.6);margin-top:8px}
+.ticket .route{font-size:.85rem;padding:10px 16px}
+@media (max-width:560px){.ticket{grid-template-columns:repeat(2,minmax(0,1fr))}.ticket .t-count{grid-column:1/-1}}
+.ticket>div{border:2px solid var(--pink);background:var(--panel);padding:14px 16px;min-width:0;box-shadow:0 0 12px rgba(255,43,214,.35),inset 0 0 12px rgba(255,43,214,.12)}
+.l{display:block;font-family:var(--arcade);font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;line-height:1.5}
+.ticket strong{font-size:1.1rem;display:block;line-height:1.3}
+.digits{font-family:var(--arcade);font-size:1.15rem;color:var(--yellow);text-shadow:0 0 10px rgba(255,233,74,.8);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+
+/* ticker */
+.ticker{background:var(--pink);color:var(--bg);overflow:hidden;white-space:nowrap;box-shadow:0 0 30px rgba(255,43,214,.6)}
+.ticker div{display:inline-block;padding-block:11px;font-family:var(--arcade);font-size:.8rem;animation:roll 32s linear infinite}
+.ticker b{color:#fff;padding-inline:16px}
+@keyframes roll{to{transform:translateX(-50%)}}
+
+/* panels */
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:2px solid var(--cyan);padding:26px clamp(16px,5vw,32px);
+  display:flex;flex-direction:column;gap:18px;scroll-margin-top:20px;box-shadow:0 0 18px rgba(25,240,255,.35),inset 0 0 22px rgba(25,240,255,.08)}
+.card.pink{border-color:var(--pink);box-shadow:0 0 18px rgba(255,43,214,.4),inset 0 0 22px rgba(255,43,214,.08)}
+.card.yellow{border-color:var(--yellow);box-shadow:0 0 18px rgba(255,233,74,.35),inset 0 0 22px rgba(255,233,74,.06)}
+ol,ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:8px}
+li::marker{color:var(--pink)}
+
+/* levels */
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.levels div{border:2px dashed rgba(25,240,255,.6);padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.levels div:last-child{border-color:var(--pink);border-style:solid;box-shadow:0 0 12px rgba(255,43,214,.4)}
+.levels .lv{font-family:var(--arcade);font-size:.6rem;color:var(--pink)}
+.levels b{font-size:1.05rem}
+
+/* buttons + forms */
+button,.btn{font:700 1rem var(--body);background:var(--pink);color:#160018;border:0;padding:12px 20px;cursor:pointer;text-decoration:none;display:inline-block;
+  box-shadow:0 0 0 2px #fff inset,0 0 18px var(--pink);text-transform:uppercase;letter-spacing:.04em}
+button:hover,.btn:hover{background:#ff6ae4}
+button.ghost,.btn.ghost{background:transparent;color:var(--cyan);box-shadow:0 0 0 2px var(--cyan) inset,0 0 12px rgba(25,240,255,.5)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.cut:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+input,select,textarea{font:inherit;color:var(--ink);background:#0d0619;border:2px solid rgba(25,240,255,.55);padding:10px 12px;width:100%;border-radius:0}
+input:focus,select:focus,textarea:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(25,240,255,.5)}
+textarea{min-height:5em;resize:vertical}
+input[type=range]{padding:0;border:0;background:none;accent-color:var(--pink);height:30px;box-shadow:none}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.form .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.field .lab{font-weight:600}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{background:transparent;color:var(--ink);box-shadow:0 0 0 2px rgba(246,239,255,.4) inset;padding:9px 14px;font-size:.9rem}
+.seg button[aria-pressed="true"]{background:var(--cyan);color:#001418;box-shadow:0 0 0 2px #fff inset,0 0 16px var(--cyan)}
+.banner{border:2px dashed var(--yellow);padding:12px 14px;color:var(--yellow)}
+
+/* players */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats div{text-align:center;border:2px solid rgba(255,233,74,.5);padding:12px 6px}
+.stats b{display:block;font-family:var(--arcade);font-size:1.4rem;color:var(--yellow);text-shadow:0 0 10px rgba(255,233,74,.7)}
+.stats span{font-size:.8rem;color:var(--muted)}
+.players{display:flex;flex-direction:column}
+.pl{display:grid;grid-template-columns:2.6em 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed rgba(180,166,209,.35)}
+.pl .idx{font-family:var(--arcade);font-size:.7rem;color:var(--pink)}
+.pl b{font-size:1.05rem}
+.tag{font-family:var(--arcade);font-size:.52rem;padding:6px 8px;border:2px solid currentColor;white-space:nowrap;text-transform:uppercase}
+.tag.ja{color:var(--lime);text-shadow:0 0 6px var(--lime)}.tag.misschien{color:var(--yellow)}.tag.nee{color:var(--muted)}
+
+/* locked level */
+.locked{border:2px dashed var(--pink);padding:18px;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.lock-ico{font-family:var(--arcade);font-size:.7rem;color:var(--pink);text-shadow:0 0 8px var(--pink)}
+.mynr{display:flex;gap:18px;align-items:center;border:2px solid var(--yellow);padding:14px 18px;box-shadow:0 0 16px rgba(255,233,74,.5)}
+.mynr .big{font-family:var(--arcade);font-size:2.6rem;color:var(--yellow);text-shadow:0 0 14px var(--yellow);line-height:1}
+
+/* cow */
+.cow svg{width:100%;height:auto;display:block;filter:drop-shadow(0 0 6px rgba(25,240,255,.5))}
+.cut{fill:rgba(25,240,255,.05);stroke:var(--cyan);stroke-width:2.5;stroke-linejoin:round;cursor:pointer;transition:fill .15s}
+.cut:hover{fill:rgba(255,43,214,.35)}
+.cut.on{fill:var(--pink)}
+.deco{fill:none;stroke:var(--cyan);stroke-width:2.5;stroke-linejoin:round}
+.cl{font-family:var(--body);font-weight:700;font-size:14px;fill:var(--ink);pointer-events:none;text-anchor:middle;text-transform:uppercase}
+.cl.sm{font-size:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-size:.78rem;padding:6px 10px;background:transparent;color:var(--ink);box-shadow:0 0 0 2px rgba(246,239,255,.35) inset;text-transform:none;letter-spacing:0}
+.chips button[aria-pressed="true"]{background:var(--pink);color:#160018;box-shadow:0 0 0 2px #fff inset,0 0 14px var(--pink)}
+.info{border:2px dashed rgba(255,43,214,.7);padding:16px;display:grid;grid-template-columns:1fr auto;gap:8px 16px}
+.info h3{grid-column:1/-1;color:var(--pink);text-shadow:0 0 8px var(--pink)}
+.info .aka{grid-column:1/-1;color:var(--muted);font-size:.9rem}
+.info p,.info .row{grid-column:1/-1}
+.meter{font-family:var(--arcade);font-size:.75rem;color:var(--yellow)}
+
+/* rules */
+.temps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.temps div{border:2px solid rgba(246,239,255,.3);padding:10px 6px;text-align:center}
+.temps div.pick{border-color:var(--pink);box-shadow:0 0 12px rgba(255,43,214,.5)}
+.temps b{display:block;font-family:var(--arcade);font-size:.85rem;color:var(--yellow);margin-bottom:6px}
+.temps span{font-size:.85rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px dashed rgba(180,166,209,.35);vertical-align:middle}
+th{font-family:var(--arcade);font-size:.52rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.w{font-family:var(--arcade);font-size:.75rem;color:var(--pink)}
+.powerups{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.powerups div{border:2px solid var(--yellow);padding:14px;min-width:0;display:flex;flex-direction:column;gap:6px}
+.powerups b{font-family:var(--arcade);font-size:.68rem;line-height:1.5;color:var(--yellow);text-shadow:0 0 8px rgba(255,233,74,.6)}
+
+/* proefkaart */
+.pieces{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.piece{border:2px solid rgba(25,240,255,.45);background:#0d0619;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.piece.me{opacity:.55}
+.piece .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pnum{font-family:var(--arcade);font-size:1.7rem;color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
+.ptot{font-family:var(--arcade);font-size:.75rem;color:var(--yellow)}
+.crit{display:grid;grid-template-columns:6.8em 1fr 2em;gap:8px;align-items:center}
+.crit span{font-weight:600;font-size:.92rem}
+.crit small{color:var(--pink);font-family:var(--arcade);font-size:.5rem}
+.crit output{font-family:var(--arcade);font-size:.75rem;text-align:right;color:var(--yellow)}
+.crit.unset output{color:var(--muted)}
+
+/* uitslag */
+.podium{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.podium div{border:2px solid var(--cyan);padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.podium div:first-child{border-color:var(--yellow);box-shadow:0 0 22px rgba(255,233,74,.6)}
+.podium .rk{font-family:var(--arcade);font-size:1.6rem;color:var(--yellow)}
+
+/* guestbook */
+.wishes{display:flex;flex-direction:column;gap:12px}
+.wish{border-left:4px solid var(--pink);background:#0d0619;padding:12px 14px;display:flex;flex-direction:column;gap:6px;box-shadow:-4px 0 14px rgba(255,43,214,.35)}
+.wish p{white-space:pre-line}
+
+/* rsvp extras */
+.photo-pick{display:flex;gap:14px;align-items:center}
+.photo-pick .av{width:72px;height:72px}
+.photo-pick input[type=file]{padding:8px;font-size:.85rem}
+.av{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;border:3px solid var(--cyan);box-shadow:0 0 12px rgba(25,240,255,.6);
+  display:grid;place-items:center;font-family:var(--arcade);font-size:1rem;color:var(--cyan);background:#0d0619}
+.allergy{display:flex;flex-wrap:wrap;gap:8px}
+.allergy button{background:transparent;color:var(--ink);box-shadow:0 0 0 2px rgba(141,255,58,.5) inset;padding:8px 12px;font-size:.85rem;text-transform:none;letter-spacing:0;font-weight:600}
+.allergy button[aria-pressed="true"]{background:var(--lime);color:#0b1400;box-shadow:0 0 0 2px #fff inset,0 0 16px var(--lime)}
+.roster{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.pc{display:flex;gap:12px;align-items:center;border:2px solid rgba(25,240,255,.4);background:#0d0619;padding:12px;min-width:0}
+.pc.ja{border-color:var(--lime);box-shadow:0 0 12px rgba(141,255,58,.3)}
+.pc.nee{opacity:.5}
+.pc .av{width:52px;height:52px}
+.pc>div{min-width:0;display:flex;flex-direction:column;gap:4px}
+.pc b{font-size:1.05rem;overflow-wrap:anywhere}
+.pc .alg{font-size:.8rem;color:var(--lime)}
+.cowbody{fill:#140a24;stroke:none}
+.cowline{fill:none;stroke:var(--cyan);stroke-width:3;stroke-linejoin:round;pointer-events:none}
+.cowfar{fill:#0f0720;stroke:rgba(25,240,255,.55);stroke-width:2.5;stroke-linejoin:round}
+.cowpart{fill:#140a24;stroke:var(--cyan);stroke-width:2.5;stroke-linejoin:round}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:8.5em 1fr 2.2em;gap:10px;align-items:center}
+.bar span{font-weight:600;font-size:.9rem;overflow-wrap:anywhere}
+.bar i{display:block;height:16px;background:linear-gradient(90deg,var(--pink),var(--yellow));box-shadow:0 0 12px rgba(255,43,214,.6);min-width:4px}
+.bar b{font-family:var(--arcade);font-size:.7rem;color:var(--yellow);text-align:right}
+/* ===== design extras ===== */
+/* 1 CRT */
+#crt{position:fixed;inset:0;pointer-events:none;z-index:35;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 58%,rgba(0,0,0,.55) 100%);
+  animation:crt 6s infinite}
+@keyframes crt{0%,96%,100%{opacity:1}97%{opacity:.85}98%{opacity:1}}
+/* 2 boot */
+#boot{position:fixed;inset:0;z-index:60;background:#05020a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;text-align:center;cursor:pointer;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));transition:opacity .5s}
+#boot .bt{font-family:var(--neon);font-size:clamp(3rem,15vw,6rem);line-height:.95;color:#2a1033;text-shadow:none}
+#boot.go .bt{animation:tubeon 1.3s forwards}
+@keyframes tubeon{0%{color:#2a1033;text-shadow:none}10%,30%{color:var(--pink);text-shadow:0 0 10px var(--pink),0 0 40px var(--pink)}15%,35%{color:#2a1033;text-shadow:none}
+  45%,100%{color:var(--pink);text-shadow:0 0 4px #fff,0 0 12px var(--pink),0 0 40px var(--pink),0 0 80px rgba(255,43,214,.6)}}
+#boot .ps{font-family:var(--arcade);font-size:clamp(.8rem,3.6vw,1.1rem);color:var(--yellow);text-shadow:0 0 10px var(--yellow);animation:blink 1s steps(2) infinite}
+#boot.go .ps{animation:blink .15s steps(2) infinite}
+#boot small{font-family:var(--arcade);font-size:.55rem;color:var(--muted);line-height:1.8}
+#boot.out{opacity:0;pointer-events:none}
+/* 3 rook + 8 zon */
+.sky{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sun{position:absolute;right:-30px;top:120px;width:min(420px,70vw);filter:drop-shadow(0 0 24px rgba(255,90,60,.6));opacity:.9}
+.smoke{position:absolute;left:8%;top:170px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(220,200,255,.16),transparent 65%);
+  filter:blur(18px);animation:smoke 9s linear infinite;opacity:0}
+.smoke:nth-child(3){left:28%;animation-delay:3s;width:220px;height:220px}
+.smoke:nth-child(4){left:46%;animation-delay:6s;width:300px;height:300px}
+.smoke:nth-child(5){left:2%;animation-delay:4.5s;width:180px;height:180px}
+@keyframes smoke{0%{transform:translate(0,80px) scale(.6);opacity:0}20%{opacity:.9}100%{transform:translate(40px,-260px) scale(1.5);opacity:0}}
+.grid-floor{animation:gridmove 1.1s linear infinite;background-size:100% 100%,60px 100%,100% 24px}
+@keyframes gridmove{to{background-position:0 0,0 0,0 24px}}
+.stukken{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.stuk{border:1px solid rgba(25,240,255,.35);padding:10px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.stuk b{font-size:.98rem}
+.muscle path{fill:none;stroke:var(--pink);stroke-width:3;stroke-linecap:round;opacity:.75;pointer-events:none;filter:drop-shadow(0 0 3px var(--pink))}
+/* 5 neonbuizen */
+.card{border-radius:18px;position:relative}
+.card::before{content:"";position:absolute;top:-8px;left:16%;right:16%;height:10px;pointer-events:none;
+  background:linear-gradient(90deg,#4a3a66 0 16px,transparent 16px calc(100% - 16px),#4a3a66 calc(100% - 16px));border-radius:3px}
+.card:nth-of-type(2n){animation:tube 9s infinite}
+.card:nth-of-type(3n){animation:tube 13s 2s infinite}
+@keyframes tube{0%,91%,93.5%,100%{filter:none}92%{filter:brightness(.55)}93%{filter:brightness(1.15)}}
+/* 6 geluid */
+#sound{position:fixed;left:calc(56px + env(safe-area-inset-left,0px));bottom:calc(56px + env(safe-area-inset-bottom,0px));z-index:45;font-family:var(--arcade);font-size:.55rem;
+  padding:10px 12px;background:#0d0619;color:var(--cyan);box-shadow:0 0 0 2px var(--cyan) inset,0 0 14px rgba(25,240,255,.5)}
+#sound[aria-pressed="true"]{background:var(--cyan);color:#001418}
+/* 7 karakterselectie */
+.select-title{font-family:var(--arcade);font-size:.7rem;color:var(--pink);text-align:center;text-shadow:0 0 8px var(--pink);animation:blink 1.4s steps(2) infinite}
+.roster{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;gap:14px!important}
+.fighter{position:relative;background:#0d0619;border:3px solid rgba(25,240,255,.5);padding:10px;display:flex;flex-direction:column;gap:8px;min-width:0;transition:transform .15s,box-shadow .15s}
+.fighter:hover{transform:translateY(-4px);border-color:var(--pink);box-shadow:0 0 22px rgba(255,43,214,.6)}
+.fighter.ja{border-color:var(--lime);box-shadow:0 0 14px rgba(141,255,58,.35)}
+.fighter.nee{filter:grayscale(1);opacity:.5}
+.fighter .pic{aspect-ratio:1;max-width:100%;width:100%;object-fit:cover;display:grid;place-items:center;background:linear-gradient(135deg,#2a1033,#0d0619);
+  font-family:var(--arcade);font-size:2.4rem;color:var(--cyan);box-shadow:0 0 0 3px #0b0614,0 0 0 6px rgba(255,233,74,.7);image-rendering:auto}
+.fighter .fname{font-family:var(--arcade);font-size:.68rem;line-height:1.5;text-transform:uppercase;overflow-wrap:anywhere;margin-top:4px}
+.fighter .me{position:absolute;top:-10px;right:-8px;font-family:var(--arcade);font-size:.5rem;background:var(--yellow);color:#1a1400;padding:5px 7px;box-shadow:0 0 10px var(--yellow)}
+.stat{display:grid;grid-template-columns:1fr;gap:3px}
+.stat em{font-style:normal;font-family:var(--arcade);font-size:.5rem;color:var(--ink)}
+.stat span{font-size:.7rem;color:var(--muted);display:flex;justify-content:space-between}
+.stat i{display:block;height:6px;background:#2a1033;position:relative}
+.stat i b{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--cyan),var(--lime));box-shadow:0 0 8px rgba(25,240,255,.6)}
+.fighter .weak{font-size:.75rem;color:var(--yellow);line-height:1.35}
+@media (prefers-reduced-motion:reduce){#crt,.smoke,.grid-floor,.card,.select-title{animation:none!important}.smoke{display:none}}
+#arcade{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+.toast{position:fixed;left:50%;bottom:calc(64px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--yellow);color:#1a1400;
+  padding:12px 18px;font-weight:700;z-index:40;max-width:calc(100% - 32px);box-shadow:0 0 22px var(--yellow)}
+footer{text-align:center;font-family:var(--arcade);font-size:.55rem;color:var(--muted);padding-bottom:40px;line-height:1.8}
+@media (max-width:440px){.temps{grid-template-columns:repeat(2,1fr)}.stats b{font-size:1.1rem}}
+@media (prefers-reduced-motion:reduce){.ticker div,.insert,h1 .l2{animation:none}html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+
+<canvas id="arcade" aria-hidden="true"></canvas>
+<div id="crt" aria-hidden="true"></div>
+<button type="button" id="sound" aria-pressed="false">♪ Geluid uit</button>
+<div id="boot" hidden role="button" tabindex="0" aria-label="Start">
+  <div class="bt">Steak<br>Off</div>
+  <div class="ps">Press start</div>
+  <small>© 2026 Sascha Arcade · Berchem<br>1 stuk rund = 1 credit</small>
+</div>
+
+<header>
+  <div class="sky" aria-hidden="true">
+    <svg class="sun" viewBox="0 0 220 110">
+      <defs>
+        <linearGradient id="sunG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe94a"/><stop offset=".45" stop-color="#ff7a3c"/><stop offset="1" stop-color="#ff2b6e"/></linearGradient>
+        <mask id="sunM"><rect width="220" height="110" fill="#fff"/>
+          <rect y="58" width="220" height="3" fill="#000"/><rect y="70" width="220" height="5" fill="#000"/><rect y="83" width="220" height="7" fill="#000"/><rect y="97" width="220" height="9" fill="#000"/></mask>
+      </defs>
+      <g mask="url(#sunM)">
+        <path d="M8 110 C6 52,52 8,108 18 C160 6,214 46,212 110 Z" fill="#f6e3c8"/>
+        <path d="M20 110 C18 60,58 24,108 32 C155 20,202 56,200 110 Z" fill="url(#sunG)"/>
+        <path d="M45 88 Q 90 60 140 78 M70 52 Q 110 46 150 58 M120 100 Q 140 70 175 76" stroke="rgba(255,240,220,.55)" stroke-width="2.5" fill="none"/>
+        <ellipse cx="140" cy="62" rx="14" ry="9" fill="#f6e3c8" opacity=".85"/>
+      </g>
+    </svg>
+    <div class="smoke"></div><div class="smoke"></div><div class="smoke"></div><div class="smoke"></div>
+  </div>
+  <div class="wrap">
+    <span class="insert">Insert coin · 1 stuk rund = 1 credit</span>
+    <h1><span class="l1 glow-pink">Steak</span><span class="l2">Off</span></h1>
+    <p class="levelup">Sascha levelt up.<br>En dat vieren we met vlees.</p>
+    <div class="player">
+      <img src="data:image/jpeg;base64,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" alt="Sascha">
+      <div><span class="p1">Player 1 · gastheer</span><b>Sascha</b><small>Zorgt voor sides, sauzen en drank</small></div>
+    </div>
+    <p class="lede">Je bent uitgenodigd voor een blinde steak tasting. Iedereen brengt één stuk rund mee, ras en deel kies je zelf. We grillen alles op dezelfde manier, proeven zonder te weten wat het is en geven punten. Wie heeft het beste stuk van de avond?</p>
+    <div class="cta"><a class="btn" href="#start">Press start · ik kom</a><a class="btn ghost" href="#spel">Hoe werkt het?</a></div>
+  </div>
+  <div class="grid-floor" aria-hidden="true"></div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div>
+  Blind proeven<b>✦</b>Zout &amp; peper only<b>✦</b>Min. 350 gram<b>✦</b>Het Gouden Mes<b>✦</b>Rusten is ook garen<b>✦</b>Tegen de draad snijden<b>✦</b>
+  Blind proeven<b>✦</b>Zout &amp; peper only<b>✦</b>Min. 350 gram<b>✦</b>Het Gouden Mes<b>✦</b>Rusten is ook garen<b>✦</b>Tegen de draad snijden<b>✦</b>
+</div></div>
+
+<main class="wrap">
+  <div class="ticket">
+    <div><span class="l">Wanneer</span><strong id="tDatum">Datum volgt</strong></div>
+    <div><span class="l">Start</span><strong id="tUur">Uur volgt</strong></div>
+    <div class="t-count"><span class="l">Nog</span><span class="digits" id="tCount">--:--:--</span></div>
+    <div class="where"><div><span class="l">Waar</span><strong class="street" id="tStraat">Adres volgt</strong><span class="city" id="tStad"></span></div>
+      <a class="btn ghost route" id="tRoute" href="#" target="_blank" rel="noopener" hidden>Route ↗</a></div>
+  </div>
+
+  <div class="banner" id="statusBanner" hidden></div>
+
+  <!-- UITSLAG -->
+  <section class="card yellow" id="uitslag" hidden>
+    <h2>High scores</h2>
+    <div class="podium" id="podium"></div>
+    <div class="powerups" id="awards"></div>
+    <h3>Alle stukken</h3>
+    <div class="scroll"><table id="ranking"></table></div>
+    <div id="stories" class="wishes"></div>
+    <h3>Beste proever</h3>
+    <div id="tasters"></div>
+  </section>
+
+  <!-- HET SPEL -->
+  <section class="card pink" id="spel">
+    <h2>Zo werkt het spel</h2>
+    <div class="levels">
+      <div><span class="lv">Level 1</span><b>Kies je stuk</b><span class="note">Eén stuk rund, min. 350 g. Ga langs je slager en hou het geheim.</span></div>
+      <div><span class="lv">Level 2</span><b>Inchecken</b><span class="note">Op de avond geef je hier je stuk in en krijg je een geheim nummer.</span></div>
+      <div><span class="lv">Level 3</span><b>Blind proeven</b><span class="note">Alles gaat op dezelfde grill. Je scoort elk nummer op je gsm.</span></div>
+      <div><span class="lv">Boss level</span><b>Onthulling</b><span class="note">Ranking, prijzen en wie wat meebracht.</span></div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="card" id="start">
+    <h2>Press start</h2>
+    <p id="formIntro">Laat weten of je erbij bent. Wat je meebrengt hou je nog even voor jezelf, dat geef je op de avond zelf in.</p>
+    <form id="rsvp" class="form" novalidate>
+      <div class="field"><label for="fNick">Spelersnaam</label><input id="fNick" maxlength="30" placeholder="Hoe noemen we je?"></div>
+      <div class="field"><span class="lab">Ben je erbij?</span>
+        <div class="seg" id="fKomt" role="group" aria-label="Ben je erbij?">
+          <button type="button" data-v="ja" aria-pressed="true">Ja!</button>
+          <button type="button" data-v="misschien" aria-pressed="false">Misschien</button>
+          <button type="button" data-v="nee" aria-pressed="false">Nee</button>
+        </div></div>
+      <div class="field full"><label for="fFoto">Je spelersfoto</label>
+        <div class="photo-pick"><span class="av" id="fFotoPrev">?</span><input id="fFoto" type="file" accept="image/*"></div>
+        <span class="note">Je foto verschijnt bij de spelers. En wie weet zit je straks als spookje achter Sascha aan.</span></div>
+      <div class="field full"><label for="fMail">E-mail</label><input id="fMail" type="email" maxlength="80" placeholder="naam@voorbeeld.be" autocomplete="email">
+        <span class="note">Alleen Sascha ziet dit. Op 28 november in de namiddag krijg je een mail om je stuk in te checken.</span></div>
+      <div class="field full"><span class="lab">Medische vraag: waar ben je allergisch aan?</span>
+        <div class="allergy" id="fAllergy" role="group" aria-label="Allergie"></div>
+        <input id="fAllergyOwn" maxlength="60" placeholder="Of verzin je eigen allergie" hidden>
+        <span class="note">Echte allergieën? Daar kunnen we niets aan doen. Jij brengt je eigen vlees mee.</span></div>
+      <div class="row full">
+        <button type="submit" id="fSave">Opslaan</button>
+        <button type="button" class="ghost" id="fRemove" hidden>Uitschrijven</button>
+        <span class="note" id="fStatus" role="status"></span>
+      </div>
+    </form>
+    <h3>Kies je speler</h3>
+    <p class="select-title">Player select</p>
+    <div class="stats" id="stats"></div>
+    <div class="roster" id="players"></div>
+  </section>
+
+
+  <!-- DE AVOND -->
+  <section class="card pink" id="avond">
+    <h2>Op de avond</h2>
+    <div id="avondLocked" class="locked">
+      <span class="lock-ico">Level locked</span>
+      <p id="lockText">Dit deel gaat open op de dag zelf. Dan lees je hier de spelregels en de punten, check je je stuk in en scoor je alle stukken op je gsm.</p>
+    </div>
+    <div id="avondOpen" hidden>
+      <div id="regels" style="display:flex;flex-direction:column;gap:16px;margin-bottom:28px">
+        <h3>Spelregels</h3>
+        <ul>
+          <li>Alles gaat op dezelfde grill met enkel zout en peper, tot dezelfde kerntemperatuur, en rust 5 minuten.</li>
+          <li>We proeven in rondes van 3 à 4 stukken. Niemand weet welk nummer van wie is.</li>
+          <li>Je scoort elk nummer op je gsm. Je eigen stuk scoor je niet.</li>
+          <li>Na de laatste ronde onthult Sascha de uitslag.</li>
+        </ul>
+        <div class="temps">
+          <div><b>46°</b><span>Bleu</span></div>
+          <div class="pick"><b>52°</b><span>Saignant</span></div>
+          <div class="pick"><b>56°</b><span>À point</span></div>
+          <div><b>62°</b><span>Medium well</span></div>
+        </div>
+        <h3>Punten</h3>
+        <div class="scroll"><table>
+          <thead><tr><th>Criterium</th><th>Waar let je op</th><th>Weging</th><th>Max</th></tr></thead>
+          <tbody>
+            <tr><td><b>Smaak</b></td><td>Diepte, vleesachtigheid, nasmaak</td><td class="w">×3</td><td>30</td></tr>
+            <tr><td><b>Malsheid</b></td><td>Hoe makkelijk bijt het</td><td class="w">×2</td><td>20</td></tr>
+            <tr><td><b>Sappigheid</b></td><td>Blijft het sappig in de mond</td><td class="w">×2</td><td>20</td></tr>
+            <tr><td><b>Vet &amp; korst</b></td><td>Marmering, vetrand, korst</td><td class="w">×1</td><td>10</td></tr>
+            <tr><td colspan="3"><b>Totaal</b></td><td><b>80</b></td></tr>
+          </tbody>
+        </table></div>
+        <h3>Te winnen</h3>
+        <div class="powerups">
+          <div><b>Het Gouden Mes</b><span class="note">Hoogste gemiddelde score.</span></div>
+          <div><b>De Slimme Slager</b><span class="note">Beste prijs-kwaliteit: score gedeeld door prijs per kilo.</span></div>
+          <div><b>De Underdog</b><span class="note">Hoogste score voor een stuk onder €25 per kilo.</span></div>
+          <div><b>Beste Proever</b><span class="note">Wie het vaakst juist raadt welk deel op het bord ligt.</span></div>
+        </div>
+      </div>
+      <div id="checkin">
+        <h3>Check je stuk in</h3>
+        <p class="note">Alleen jij en Sascha zien dit tot de onthulling.</p>
+        <form id="pieceForm" class="form" novalidate style="margin-top:14px">
+          <div class="field"><label for="pDeel">Welk stuk?</label><select id="pDeel"></select></div>
+          <div class="field" id="pVrijWrap" hidden><label for="pVrij">Welk stuk precies?</label><input id="pVrij" maxlength="40" placeholder="bv. Denver steak"></div>
+          <div class="field"><label for="pRas">Ras</label><input id="pRas" maxlength="40" placeholder="bv. Blanc Bleu Belge"></div>
+          <div class="field"><label for="pSlager">Slager of winkel</label><input id="pSlager" maxlength="50"></div>
+          <div class="field"><label for="pPrijs">Prijs per kilo (€)</label><input id="pPrijs" type="number" min="0" step="0.5" inputmode="decimal"></div>
+          <div class="field"><label for="pGewicht">Gewicht (g)</label><input id="pGewicht" type="number" min="0" step="10" inputmode="numeric"></div>
+          <div class="field full"><label for="pVerhaal">Het verhaal achter je stuk</label><textarea id="pVerhaal" maxlength="300" placeholder="Rijping, boer, een anekdote..."></textarea></div>
+          <div class="row full"><button type="submit" id="pSave">Inchecken</button><span class="note" id="pStatus" role="status"></span></div>
+        </form>
+        <div class="mynr" id="myNr" hidden style="margin-top:16px"><span class="big" id="myNrVal">–</span><span>Dit is jouw geheime nummer. Leg het kaartje met dit nummer bij je stuk.</span></div>
+      </div>
+      <div id="proefkaart" style="margin-top:28px;display:flex;flex-direction:column;gap:14px">
+        <h3>Mijn proefkaart</h3>
+        <p class="note">Geef elk nummer 1 tot 10 per criterium en raad welk deel van de koe het is. Alles wordt meteen bewaard. Je eigen nummer staat grijs.</p>
+        <div class="field" id="nickWrap" hidden><label for="scorerNick">Je naam</label><input id="scorerNick" maxlength="30"></div>
+        <div class="pieces" id="pieces"></div>
+      </div>
+      <div id="revealCtl" class="locked" hidden style="margin-top:24px">
+        <span class="lock-ico">Alleen Sascha ziet dit</span>
+        <p class="note" id="revealNote">Klik na de laatste ronde. Dan zien alle spelers de uitslag, het ras, de slager en de prijs.</p>
+        <button type="button" id="revealBtn">Onthul de uitslag</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- KOE -->
+  <section class="card cow" id="koe">
+    <h2>Kies je stuk</h2>
+    <p>Een Blanc Bleu Belge op de top van zijn kunnen. Tik op een deel om te zien welke stukken eruit komen. <span id="nstuk"></span></p>
+    <svg viewBox="0 0 640 360" role="group" aria-label="Gespierde koe met vleesdelen">
+      <defs><clipPath id="cowclip"><path d="M130 92 C150 64,185 44,228 56 C262 42,300 56,330 60 C400 56,450 52,490 58 C540 52,588 68,602 106 C616 136,614 168,598 184 C614 202,602 230,578 240 C566 246,560 252,556 262 C552 285,556 310,562 334 L534 334 C530 310,526 288,520 270 C512 268,506 268,500 268 C494 280,470 282,462 268 C400 274,300 272,262 262 C256 284,254 306,256 322 L258 334 L228 334 L228 320 C214 300,198 276,206 254 C188 250,160 238,146 220 C136 210,126 204,116 198 C98 206,76 212,58 210 C42 209,32 199,34 186 C36 174,44 168,50 163 C70 136,92 108,108 96 C114 90,122 88,130 92 Z"/></clipPath></defs>
+      <path class="cowfar" d="M268 258 C272 282,274 304,276 322 L277 334 L302 334 C301 308,298 284,294 262 Z"/>
+      <path class="cowfar" d="M486 266 C490 288,492 308,494 324 L495 334 L520 334 C518 308,515 286,510 268 Z"/>
+      <path class="cowbody" d="M130 92 C150 64,185 44,228 56 C262 42,300 56,330 60 C400 56,450 52,490 58 C540 52,588 68,602 106 C616 136,614 168,598 184 C614 202,602 230,578 240 C566 246,560 252,556 262 C552 285,556 310,562 334 L534 334 C530 310,526 288,520 270 C512 268,506 268,500 268 C494 280,470 282,462 268 C400 274,300 272,262 262 C256 284,254 306,256 322 L258 334 L228 334 L228 320 C214 300,198 276,206 254 C188 250,160 238,146 220 C136 210,126 204,116 198 C98 206,76 212,58 210 C42 209,32 199,34 186 C36 174,44 168,50 163 C70 136,92 108,108 96 C114 90,122 88,130 92 Z"/>
+      <g clip-path="url(#cowclip)">
+        <polygon class="cut" data-k="wang" tabindex="0" points="0,20 135,20 122,205 0,240"/>
+        <polygon class="cut" data-k="tong" tabindex="0" points="20,192 120,198 118,240 20,240"/>
+        <polygon class="cut" data-k="nek" tabindex="0" points="135,20 225,20 212,170 146,212 122,205"/>
+        <polygon class="cut" data-k="schouder" tabindex="0" points="225,20 310,20 305,180 212,170"/>
+        <polygon class="cut" data-k="rib" tabindex="0" points="310,20 385,20 385,180 305,180"/>
+        <polygon class="cut" data-k="lende" tabindex="0" points="385,20 460,20 460,150 385,150"/>
+        <polygon class="cut" data-k="filet" tabindex="0" points="385,150 460,150 460,182 385,180"/>
+        <polygon class="cut" data-k="rump" tabindex="0" points="460,20 522,20 515,195 460,182"/>
+        <polygon class="cut" data-k="bil" tabindex="0" points="522,20 640,20 640,268 540,268 515,195"/>
+        <polygon class="cut" data-k="borst" tabindex="0" points="122,205 146,212 212,170 250,175 250,268 0,268"/>
+        <polygon class="cut" data-k="shortrib" tabindex="0" points="250,175 305,180 330,181 330,268 250,268"/>
+        <polygon class="cut" data-k="onglet" tabindex="0" points="330,181 385,180 385,268 330,268"/>
+        <polygon class="cut" data-k="vang" tabindex="0" points="385,180 460,182 515,195 540,268 385,268"/>
+        <polygon class="cut" data-k="schenkel" tabindex="0" points="150,268 310,268 310,360 150,360"/>
+        <polygon class="cut" data-k="schenkel" tabindex="0" points="522,268 640,268 640,360 522,360"/>
+      </g>
+      <path class="cowline" d="M130 92 C150 64,185 44,228 56 C262 42,300 56,330 60 C400 56,450 52,490 58 C540 52,588 68,602 106 C616 136,614 168,598 184 C614 202,602 230,578 240 C566 246,560 252,556 262 C552 285,556 310,562 334 L534 334 C530 310,526 288,520 270 C512 268,506 268,500 268 C494 280,470 282,462 268 C400 274,300 272,262 262 C256 284,254 306,256 322 L258 334 L228 334 L228 320 C214 300,198 276,206 254 C188 250,160 238,146 220 C136 210,126 204,116 198 C98 206,76 212,58 210 C42 209,32 199,34 186 C36 174,44 168,50 163 C70 136,92 108,108 96 C114 90,122 88,130 92 Z"/>
+      <path class="cut" data-k="staart" tabindex="0" d="M594 104 C614 140,622 200,616 248 L606 248 C612 200,606 146,586 112 Z"/>
+      <path class="cut" data-k="staart" tabindex="0" d="M611 240 C624 252,624 276,611 284 C600 276,600 252,611 240 Z"/>
+      <g class="muscle">
+        <path d="M150 104 C178 92,204 102,218 128"/>
+        <path d="M228 84 C262 104,276 160,258 228"/>
+        <path d="M214 176 C226 204,236 230,240 256"/>
+        <path d="M318 150 C334 168,342 190,344 214"/>
+        <path d="M352 148 C368 166,376 190,378 214"/>
+        <path d="M408 236 C428 246,452 246,470 236"/>
+        <path d="M500 78 C542 108,560 170,540 224"/>
+        <path d="M486 124 C512 156,520 204,506 252"/>
+        <path d="M560 86 C586 126,590 180,572 222"/>
+        <path d="M168 228 C186 238,204 242,222 240"/>
+        <path d="M150 214 C170 194,200 194,216 212"/>
+        <path d="M520 150 C540 172,548 202,540 232"/>
+        <path d="M546 116 C566 138,574 170,568 198"/>
+        <path d="M340 74 C360 90,380 92,400 80"/>
+        <path d="M412 72 C432 88,452 88,470 76"/>
+        <path d="M236 70 C252 64,270 66,284 76"/>
+        <path d="M206 258 C214 280,216 300,226 318"/>
+      </g>
+      <path class="cowpart" d="M118 98 C112 80,118 64,136 58 C131 69,129 80,128 92 Z"/>
+      <path class="cowpart" d="M124 104 C140 92,164 94,174 106 C158 116,138 116,124 108 Z"/>
+      <path d="M92 112 L130 96 L136 108 L98 125 Z" fill="var(--pink)" stroke="#fff" stroke-width="1.5" style="filter:drop-shadow(0 0 6px var(--pink))"/>
+      <path class="cowpart" style="fill:#2a1033" d="M462 268 C468 280,494 280,500 268"/>
+      <path class="cowline" d="M228 332 L258 332 M534 332 L562 332" style="stroke-width:6;stroke:var(--pink)"/>
+      <circle cx="92" cy="138" r="5.5" fill="#19f0ff"/>
+      <path d="M84 128 L100 124" stroke="#19f0ff" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="44" cy="189" rx="4" ry="6" fill="#19f0ff" opacity=".8"/>
+      <text class="cl" x="78" y="168">Wang</text>
+      <text class="cl sm" x="74" y="214">Tong</text>
+      <text class="cl" x="178" y="140">Nek</text>
+      <text class="cl" x="262" y="118">Schouder</text>
+      <text class="cl" x="346" y="112">Rib</text>
+      <text class="cl" x="422" y="104">Lende</text>
+      <text class="cl sm" x="422" y="170">Filet pur</text>
+      <text class="cl" x="488" y="120">Rump</text>
+      <text class="cl" x="572" y="150">Bil</text>
+      <text class="cl" x="196" y="234">Borst</text>
+      <text class="cl sm" x="290" y="232">Short rib</text>
+      <text class="cl sm" x="357" y="232">Onglet</text>
+      <text class="cl" x="452" y="236">Vang</text>
+      <text class="cl sm" x="242" y="302" transform="rotate(-90 242 302)">Schenkel</text>
+      <text class="cl sm" x="630" y="190" transform="rotate(90 630 190)">Staart</text>
+    </svg>
+    <div class="info" id="info" aria-live="polite" hidden></div>
+  </section>
+
+
+  <!-- GASTHEER (alleen zichtbaar voor Sascha, of met ?gastheer in de link) -->
+  <section class="card" id="host" hidden>
+    <h2>Gastheer</h2>
+    <div id="hostSetup"><p>Dit is jouw gastheer-ID op dit toestel. Plak het in <b>config.js</b> bij <code>ownerUid</code> en in <b>firestore.rules</b> bij <code>OWNER_UID</code>.</p></div>
+    <div class="row"><code id="hostUid" style="overflow-wrap:anywhere;font-size:.9rem">–</code><button type="button" class="ghost" id="uidCopy">Kopieer ID</button></div>
+    <div id="hostMails" hidden style="display:flex;flex-direction:column;gap:10px">
+      <h3>E-mailadressen (<span id="hostMailCount">0</span>)</h3>
+      <p class="note">Iedereen die ja of misschien zei. Plak ze in BCC voor je mail van 21 en 28 november.</p>
+      <textarea id="hostMailList" readonly></textarea>
+      <div class="row"><button type="button" id="hostCopy">Kopieer alle e-mails</button></div>
+    </div>
+  </section>
+</main>
+<footer class="wrap">Game over? Nooit.<br>Steak Off · Player 1 levelt up</footer>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let toastT;function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,2600)}
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},
+  sget(k){try{return sessionStorage.getItem(k)}catch(e){return null}},sset(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
+
+/* ================= GELUID ================= */
+const SFX={on:store.get("so-sound")==="1",ctx:null};
+function audio(){if(!SFX.ctx){try{SFX.ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(SFX.ctx&&SFX.ctx.state==="suspended")SFX.ctx.resume();return SFX.ctx}
+function beep(seq){
+  if(!SFX.on)return;const c=audio();if(!c)return;let t=c.currentTime+.01;
+  seq.forEach(([f,d,type])=>{const o=c.createOscillator(),g=c.createGain();o.type=type||"square";o.frequency.setValueAtTime(f,t);
+    g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(g).connect(c.destination);o.start(t);o.stop(t+d+.02);t+=d*.92});
+}
+window.__sfx=n=>({chomp:()=>beep([[520,.06],[360,.06],[520,.06],[360,.06]]),levelup:()=>beep([[523,.09],[659,.09],[784,.09],[1047,.25]]),
+  coin:()=>beep([[988,.07],[1319,.3]]),click:()=>beep([[880,.035]])}[n]||(()=>{}))();
+function renderSound(){const b=$("#sound");b.setAttribute("aria-pressed",SFX.on);b.textContent=SFX.on?"♪ Geluid aan":"♪ Geluid uit"}
+$("#sound").onclick=()=>{SFX.on=!SFX.on;store.set("so-sound",SFX.on?"1":"0");if(SFX.on){audio();window.__sfx("coin")}renderSound()};
+renderSound();
+
+/* ================= STARTSCHERM ================= */
+(function(){
+  const bt=$("#boot");if(reduce||store.sget("so-boot"))return;bt.hidden=false;let done=false;
+  const go=()=>{if(done)return;done=true;store.sset("so-boot","1");if(SFX.on){audio();window.__sfx("levelup")}bt.classList.add("go");
+    setTimeout(()=>{bt.classList.add("out");setTimeout(()=>bt.hidden=true,500)},1500)};
+  bt.addEventListener("click",go);bt.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
+  setTimeout(go,4500);
+})();
+
+
+/* ================= PAC-SASCHA ================= */
+(function(){
+  const cv=$("#arcade"),ctx=cv.getContext("2d"),face=new Image();
+  face.src=document.querySelector(".player img").src;
+  let W=0,H=0,dpr=1,P=0,M=0;
+  function size(){dpr=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    M=W<500?18:30;P=2*(W-2*M)+2*(H-2*M)}
+  size();addEventListener("resize",size);
+  function at(s){s=((s%P)+P)%P;const a=W-2*M,b=H-2*M;
+    if(s<a)return[M+s,M,0];s-=a;if(s<b)return[W-M,M+s,1];s-=b;if(s<a)return[W-M-s,H-M,2];s-=a;return[M,H-M-s,3]}
+  const ANG=[0,Math.PI/2,Math.PI,-Math.PI/2];
+  let s=0,last=performance.now(),gap=150,caught=0,pop=0;
+  const R=()=>W<500?17:22;
+  function steakPath(r){
+    ctx.beginPath();
+    ctx.moveTo(-1.25*r,-.15*r);
+    ctx.bezierCurveTo(-1.3*r,-.75*r,-.55*r,-.95*r,.05*r,-.78*r);
+    ctx.bezierCurveTo(.55*r,-.95*r,1.3*r,-.7*r,1.25*r,-.05*r);
+    ctx.bezierCurveTo(1.2*r,.55*r,.6*r,.85*r,.05*r,.72*r);
+    ctx.bezierCurveTo(-.55*r,.9*r,-1.2*r,.55*r,-1.25*r,-.15*r);
+    ctx.closePath();
+  }
+  function steak(x,y,t,dir){
+    const r=R()*1.15;
+    ctx.save();ctx.translate(x,y+Math.sin(t*7)*2);ctx.rotate(Math.sin(t*5)*.18+(dir===2?Math.PI:0));
+    // vetrand
+    ctx.shadowColor="#ff3b5c";ctx.shadowBlur=20;
+    ctx.fillStyle="#f6e3c8";steakPath(r*1.08);ctx.fill();ctx.shadowBlur=0;
+    // vlees
+    const g=ctx.createRadialGradient(-r*.2,-r*.2,r*.1,0,0,r*1.2);g.addColorStop(0,"#d4223f");g.addColorStop(.7,"#9e1028");g.addColorStop(1,"#6e0718");
+    ctx.fillStyle=g;steakPath(r*.94);ctx.fill();
+    ctx.save();steakPath(r*.94);ctx.clip();
+    // marmering
+    ctx.strokeStyle="rgba(255,236,220,.55)";ctx.lineWidth=Math.max(1,r*.05);
+    [[-.8,-.3,-.2,-.5,.4,-.2],[-.6,.25,0,.05,.6,.35],[-.1,-.6,.1,-.1,-.05,.5]].forEach(([a,b,c,d,e,f])=>{ctx.beginPath();ctx.moveTo(a*r,b*r);ctx.quadraticCurveTo(c*r,d*r,e*r,f*r);ctx.stroke()});
+    // vetoog
+    ctx.fillStyle="rgba(250,232,210,.85)";ctx.beginPath();ctx.ellipse(.35*r,-.15*r,.2*r,.13*r,.4,0,7);ctx.fill();
+    // grillstrepen
+    ctx.strokeStyle="rgba(30,4,8,.75)";ctx.lineWidth=r*.13;ctx.lineCap="round";
+    for(let i=-2;i<=2;i++){ctx.beginPath();ctx.moveTo((i*.42-.6)*r,-r);ctx.lineTo((i*.42+.6)*r,r);ctx.stroke()}
+    ctx.restore();
+    // glans
+    ctx.fillStyle="rgba(255,255,255,.25)";ctx.beginPath();ctx.ellipse(-.45*r,-.42*r,.28*r,.08*r,-.3,0,7);ctx.fill();
+    ctx.restore();
+  }
+  const ghostImgs={};
+  function ghost(x,y,t,src,color,i){
+    const r=R()*.95;ctx.save();ctx.translate(x,y+Math.sin(t*5+i)*2);
+    const shape=()=>{ctx.beginPath();ctx.moveTo(-r,r*.9);ctx.lineTo(-r,0);ctx.arc(0,0,r,Math.PI,0);ctx.lineTo(r,r*.9);
+      const wv=Math.sin(t*10+i)*r*.12;for(let k=0;k<4;k++){const x1=r-(k+.5)*r/2,x2=r-(k+1)*r/2;ctx.quadraticCurveTo(x1,r*.6+(k%2?wv:-wv),x2,r*.9)}ctx.closePath()};
+    ctx.shadowColor=color;ctx.shadowBlur=18;ctx.fillStyle=color;ctx.save();ctx.scale(1.12,1.1);shape();ctx.fill();ctx.restore();ctx.shadowBlur=0;
+    shape();ctx.clip();
+    let img=src&&ghostImgs[src];if(src&&!img){img=new Image();img.src=src;ghostImgs[src]=img}
+    if(img&&img.complete&&img.naturalWidth)ctx.drawImage(img,-r,-r,r*2,r*2);else{ctx.fillStyle="#0d0619";ctx.fill()}
+    ctx.restore();
+  }
+  function broc(x,y,t){
+    const r=R()*.75;ctx.save();ctx.translate(x,y+Math.sin(t*5)*2);ctx.shadowColor="#8dff3a";ctx.shadowBlur=14;
+    ctx.fillStyle="#3fae1f";ctx.fillRect(-r*.3,0,r*.6,r*1.1);
+    ctx.fillStyle="#8dff3a";[[-r*.55,-r*.1],[r*.55,-r*.1],[0,-r*.55],[0,0]].forEach(([a,b])=>{ctx.beginPath();ctx.arc(a,b,r*.55,0,7);ctx.fill()});
+    ctx.shadowBlur=0;ctx.fillStyle="#fff";[-r*.28,r*.28].forEach(a=>{ctx.beginPath();ctx.arc(a,-r*.05,r*.2,0,7);ctx.fill()});
+    ctx.fillStyle="#0b0614";[-r*.24,r*.32].forEach(a=>{ctx.beginPath();ctx.arc(a,-r*.02,r*.09,0,7);ctx.fill()});
+    ctx.restore();
+  }
+  function pac(x,y,dir,t){
+    const r=R(),open=reduce?.35:(.08+.32*Math.abs(Math.sin(t*9))),a=ANG[dir];
+    ctx.save();ctx.translate(x,y);
+    ctx.shadowColor="#ffe94a";ctx.shadowBlur=22;ctx.fillStyle="#ffe94a";
+    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r+3,a+open,a+Math.PI*2-open);ctx.closePath();ctx.fill();
+    ctx.shadowBlur=0;ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,r,a+open,a+Math.PI*2-open);ctx.closePath();ctx.clip();
+    if(face.complete&&face.naturalWidth){ctx.save();if(dir===2){ctx.scale(-1,1)}ctx.drawImage(face,-r,-r,r*2,r*2);ctx.restore()}
+    ctx.restore();
+  }
+  function frame(now){
+    const dt=Math.min(.05,(now-last)/1000);last=now;const t=now/1000;
+    if(!reduce){s+=dt*(W<500?70:95);gap-=dt*9;if(gap<=4){gap=170;caught++;pop=1;window.__sfx&&window.__sfx("chomp")}}
+    ctx.clearRect(0,0,W,H);
+    // dots
+    ctx.fillStyle="#ffd6f6";ctx.shadowColor="#ff2bd6";ctx.shadowBlur=8;
+    const step=26,base=Math.floor(s/step)*step;
+    for(let d=base+step;d<base+P*.72;d+=step){const ds=d-s;if(ds<gap+R()+6&&ds>gap-R()-6)continue;const [x,y]=at(d);ctx.beginPath();ctx.arc(x,y,2.2,0,7);ctx.fill()}
+    ctx.shadowBlur=0;
+    const gs=(window.__ghosts||[]).slice(0,4),cols=["#ff2bd6","#19f0ff","#ff9a2b","#8dff3a"];
+    if(gs.length)gs.forEach((src,i)=>{const [gx,gy]=at(s-80-i*58);ghost(gx,gy,t,src,cols[i%4],i)});
+    else{const [bx,by]=at(s-90);broc(bx,by,t)}
+    const [sx,sy,sd]=at(s+gap);steak(sx,sy,t,sd);
+    const [px,py,dir]=at(s);pac(px,py,dir,t);
+    // hud
+    ctx.font=`${W<500?8:10}px "Press Start 2P", monospace`;ctx.fillStyle="#ffe94a";ctx.shadowColor="#ffe94a";ctx.shadowBlur=8;
+    ctx.textAlign="right";ctx.fillText("STEAKS "+String(caught).padStart(2,"0"),W-M-26,H-M-22);ctx.shadowBlur=0;
+    if(pop>0){ctx.globalAlpha=pop;ctx.font=`${W<500?10:13}px "Press Start 2P", monospace`;ctx.fillStyle="#ff2bd6";ctx.textAlign="center";
+      ctx.fillText("CHOMP!",px,py-R()-12-(1-pop)*20);ctx.globalAlpha=1;pop-=dt*.9}
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  face.onload=()=>{if(reduce)frame(performance.now())};
+  requestAnimationFrame(frame);
+})();
+
+/* ================= KOE ================= */
+const CUTS={
+  rib:{n:"Ribstuk",s:3,p:"€€€",d:"Het rijkst gemarmerde deel. Hier komen de klassieke steaks vandaan.",st:[["Côte à l'os","Ribstuk met bot, 4 tot 6 cm dik. Om te delen.",3],["Entrecôte","Ribeye zonder bot, met het typische vetoog.",3],["Tomahawk","Côte à l'os met een lang schoongemaakt bot. Show op de grill.",3],["Ribeye cap","Het buitenste spiertje rond de ribeye. Volgens kenners het lekkerste stuk van de koe.",3]]},
+  lende:{n:"Lende",s:3,p:"€€€",d:"Stevige bite met een mooie vetrand aan de zijkant.",st:[["Faux-filet","Ook contre-filet of striploin. Laat de vetrand eraan.",3],["T-bone","Lende en filet pur aan weerszijden van één bot.",3],["Porterhouse","Een grote T-bone met een flink stuk filet.",3]]},
+  filet:{n:"Filet pur",s:3,p:"€€€€",d:"Het malste stuk van de koe, maar mild van smaak. Duur per kilo, dus lastig voor de Slimme Slager.",st:[["Chateaubriand","Dik middenstuk voor twee personen.",3],["Tournedos","Ronde medaillons uit de filet.",3],["Filet mignon","Het smalle uiteinde, klein maar mals.",3]]},
+  rump:{n:"Rump",s:3,p:"€€",d:"Smaakvol en betaalbaar. Een sterke kandidaat voor de Slimme Slager.",st:[["Rumsteak","Stevige, magere steak met veel smaak.",3],["Picanha","Met een dikke vetkap die krokant wordt. Braziliaanse favoriet.",3],["Tri-tip","Driehoekig stuk, een Californische klassieker.",3],["Aiguillette baronne","Bistrostuk, mals en sappig.",3]]},
+  onglet:{n:"Onglet & hampe",s:3,p:"€€",d:"Stukken van het middenrif. Intens, licht ijzerachtig, en per koe maar weinig. Bestel op tijd.",st:[["Onglet","Hanger steak. Er is er maar één per koe.",3],["Hampe","Skirt steak, dun en vol smaak.",3],["Bavette d'aloyau","Flap meat, grove draad en heel sappig.",3]]},
+  vang:{n:"Vang",s:3,p:"€€",d:"Grove draad en veel smaak. Kort en heet bakken, dun snijden tegen de draad.",st:[["Vang","De klassieke Belgische bavette.",3],["Flank steak","Bavette de flanchet, langwerpig en mager.",3]]},
+  bil:{n:"Bil & pastoorsstuk",s:2,p:"€€",d:"Magere spieren van de achterpoot, met een paar verborgen pareltjes voor de grill.",st:[["Poire","Klein peervormig spiertje, verrassend mals.",3],["Merlan","Plat bistrostuk met een intense smaak.",3],["Araignée","Spider steak. Zeldzaam en vol smaak.",3],["Spierstuk","Mager. Dun gesneden heerlijk.",2],["Bovenbil & onderbil","Beter voor rosbief of tartaar.",1]]},
+  schouder:{n:"Schouder",s:2,p:"€",d:"Meestal stoofvlees, maar met een paar topsteaks voor wie durft. Underdog-materiaal.",st:[["Flat iron","Featherblade zonder de zenuw. Mals en vol smaak.",3],["Denver steak","Uit de schouder, mooi gemarmerd.",3],["Chuck eye","De ribeye van de arme man.",2],["Paleron & jumeau","Top om te stoven.",1]]},
+  shortrib:{n:"Short rib",s:2,p:"€€",d:"Ribben met dik vlees ertussen. Meestal gestoofd, maar dun gesneden ook top op de grill.",st:[["Short rib steak","Dwars door de rib gesneden, zoals Koreaanse galbi.",3],["Plat de côtes","Voor uren in de oven of de smoker.",1]]},
+  borst:{n:"Borst",s:1,p:"€",d:"Heeft uren nodig op lage temperatuur.",st:[["Brisket","Low and slow op de bbq.",1],["Pointe de poitrine","Stoofvlees.",1]]},
+  nek:{n:"Nek",s:1,p:"€",d:"Veel bindweefsel en smaak, maar taai als steak.",st:[["Collier","Stoofpot of gehakt.",1]]},
+  wang:{n:"Wang",s:0,p:"€€",d:"Fantastisch na uren stoven, onbruikbaar als steak.",st:[["Joues de boeuf","Stoven tot het uit elkaar valt.",0]]},
+  tong:{n:"Tong",s:0,p:"€",d:"Een klassieker van bij oma, niet voor de grill.",st:[["Tong in madeirasaus","Uren garen, dan in plakjes met saus.",0]]},
+  staart:{n:"Ossenstaart",s:0,p:"€€",d:"Gelatine en smaak. Voor soep of ragout.",st:[["Ossenstaart","Uren stoven.",0]]},
+  schenkel:{n:"Schenkel",s:0,p:"€",d:"Vol bindweefsel en merg.",st:[["Jarret","Osso buco of soep.",0]]}
+};
+const ORDER=["rib","lende","filet","rump","onglet","vang","bil","schouder","shortrib","borst","nek","wang","tong","staart","schenkel"];
+const NSTUK=ORDER.reduce((a,k)=>a+CUTS[k].st.length,0);
+const cutName=(k,free)=>free||(k==="ander"?"Ander stuk":(CUTS[k]?.n||"Onbekend"));
+let currentCut="rib";
+function pick(k){
+  currentCut=k;const c=CUTS[k],ok=c.s>=2;$("#info").hidden=false;
+  document.querySelectorAll(".cut").forEach(p=>p.classList.toggle("on",p.dataset.k===k));
+  $("#info").innerHTML=`<h3>${c.n}</h3>
+    <div><span class="l">Geschikt als steak</span><span class="meter">${"★".repeat(c.s)+"☆".repeat(3-c.s)}</span></div>
+    <div><span class="l">Prijs</span><span class="meter">${c.p}</span></div>
+    <p>${c.d}</p>
+    <div class="stukken">${c.st.map(([n,d,s])=>`<div class="stuk"><b>${n}</b><span class="meter">${"★".repeat(s)+"☆".repeat(3-s)}</span><span class="note">${d}</span></div>`).join("")}</div>
+    <div class="row"><span class="tag ${ok?"ja":"nee"}">${ok?"Breng maar mee":"Liever niet"}</span></div>`;
+}
+document.querySelectorAll(".cut").forEach(p=>{p.addEventListener("click",()=>pick(p.dataset.k));
+  p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick(p.dataset.k)}})});
+$("#nstuk").textContent=NSTUK+" stukken om uit te kiezen.";
+$("#pDeel").innerHTML=`<option value="">Kies je stuk</option>`+ORDER.map(k=>`<optgroup label="${CUTS[k].n}">`+CUTS[k].st.map(([n])=>`<option value="${k}|${esc(n)}">${esc(n)}</option>`).join("")+`</optgroup>`).join("")+`<option value="ander">Iets anders</option>`;
+$("#pDeel").addEventListener("change",()=>{$("#pVrijWrap").hidden=$("#pDeel").value!=="ander"});
+
+/* ================= STATE ================= */
+const S={preds:{},event:{},reveal:null,guests:{},nummers:{},scores:{},wishes:{},piece:undefined,loaded:{guests:false}};
+let db=null,user=null,myId=null,isOwner=false,writeBlocked=false;
+const w=r=>r?(+r.s||0)*3+(+r.m||0)*2+(+r.j||0)*2+(+r.v||0):0;
+const full=r=>r&&["s","m","j","v"].every(k=>+r[k]>=1);
+const canWrite=()=>!!(db&&myId&&!writeBlocked);
+const chains={},timers={};
+function write(path,fn){chains[path]=(chains[path]||Promise.resolve()).then(fn).catch(onWriteErr);return chains[path]}
+function debounced(path,fn,ms=700){clearTimeout(timers[path]);timers[path]=setTimeout(()=>write(path,fn),ms)}
+function onWriteErr(e){
+  if(e&&e.code==="permission-denied"){writeBlocked=true;toast("Opslaan geweigerd. Laat het Sascha weten.");renderStatus()}
+  else if(e&&e.code==="quota_exceeded")toast("De opslag is vol. Laat het Sascha weten.");
+  else toast("Opslaan lukte niet. Probeer het zo opnieuw.");
+  throw e;
+}
+function errH(e){if(e&&e.code==="permission-denied")return;renderStatus("Live gegevens zijn even niet bereikbaar. Herlaad later de pagina.")}
+const today=()=>new Date().toLocaleDateString("sv");
+const isDay=()=>{const E=S.event;return E.phase==="avond"||E.phase==="onthulling"||(!!E.datum&&E.datum<=today())};
+const fmtDate=d=>{try{return new Date(d+"T12:00").toLocaleDateString("nl-BE",{weekday:"long",day:"numeric",month:"long"})}catch(e){return d}};
+
+/* ================= EVENT ================= */
+function renderEvent(){
+  const E=S.event;
+  $("#tDatum").textContent=E.datum?fmtDate(E.datum):"Datum volgt";
+  $("#tUur").textContent=E.uur||"Uur volgt";
+  const parts=(E.adres||"").split(",").map(x=>x.trim()).filter(Boolean);
+  $("#tStraat").textContent=parts[0]||"Adres volgt";$("#tStad").textContent=parts.slice(1).join(", ");
+  const rt=$("#tRoute");rt.hidden=!E.adres;if(E.adres)rt.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(E.adres);
+  tick();
+  $("#uitslag").hidden=E.phase!=="onthulling"||!S.reveal;
+  const day=isDay();
+  $("#avondLocked").hidden=day;$("#avondOpen").hidden=!day;
+  $("#lockText").textContent=`Dit deel gaat open ${E.datum?"op "+fmtDate(E.datum):"op de dag zelf"}. Dan lees je hier de spelregels en de punten, check je je stuk in, krijg je je geheime nummer en scoor je alle stukken op je gsm.`;
+  $("#revealCtl").hidden=!(isOwner&&day);
+  $("#revealBtn").textContent=E.phase==="onthulling"?"Uitslag terug verbergen":"Onthul de uitslag";
+  $("#revealNote").textContent=E.phase==="onthulling"?"De uitslag staat open voor iedereen.":"Klik na de laatste ronde. Dan zien alle spelers de uitslag, het ras, de slager en de prijs.";
+}
+function tick(){
+  const E=S.event,el=$("#tCount");
+  if(!E.datum){el.textContent="--:--:--";return}
+  const target=new Date(E.datum+"T"+(E.uur||"19:00"));const ms=target-new Date();
+  if(ms<=0){el.textContent=ms>-8*36e5?"NU!":"GAME OVER";return}
+  const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+  el.textContent=`${String(d).padStart(2,"0")}D ${String(h).padStart(2,"0")}U ${String(m).padStart(2,"0")}M`;
+}
+setInterval(tick,30000);
+let statusMsg="Verbinden…";
+function renderStatus(msg){
+  let m=msg||statusMsg||"";
+  if(!m&&db&&writeBlocked)m="Opslaan wordt geweigerd. Laat het Sascha weten.";
+  const b=$("#statusBanner");b.textContent=m;b.hidden=!m;
+  ["#fSave","#pSave"].forEach(s=>$(s).disabled=!canWrite());
+}
+
+/* ================= RSVP ================= */
+let komt="ja",formFilled=false;
+function setKomt(v){komt=v;$("#fKomt").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v))}
+$("#fKomt").addEventListener("click",e=>{const b=e.target.closest("button");if(b)setKomt(b.dataset.v)});
+const ALLERGIES=["Well-done steak","Ketchup op vlees","Kipfilet","Broccoli","Mensen die 'medium' zeggen en doorbakken bedoelen","Vegetariërs met een mening","Kalkoenham","Iets anders"];
+let allergy="",foto="";
+$("#fAllergy").innerHTML=ALLERGIES.map(a=>`<button type="button" data-a="${esc(a)}" aria-pressed="false">${esc(a)}</button>`).join("");
+function setAllergy(a){
+  const known=ALLERGIES.includes(a)&&a!=="Iets anders";
+  const sel=!a?"":known?a:"Iets anders";
+  $("#fAllergy").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.a===sel));
+  $("#fAllergyOwn").hidden=sel!=="Iets anders";
+  if(sel==="Iets anders"&&!known&&a&&a!=="Iets anders")$("#fAllergyOwn").value=a;
+  allergy=sel==="Iets anders"?"__own":sel;
+}
+$("#fAllergy").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;setAllergy(b.getAttribute("aria-pressed")==="true"?"":b.dataset.a);if(allergy==="__own")$("#fAllergyOwn").focus()});
+function avatar(src,nick){return src?`<img class="av" src="${esc(src)}" alt="">`:`<span class="av">${esc((nick||"?").trim().charAt(0).toUpperCase()||"?")}</span>`}
+function showPreview(){const p=$("#fFotoPrev");p.outerHTML=foto?`<img class="av" id="fFotoPrev" src="${esc(foto)}" alt="Jouw foto">`:`<span class="av" id="fFotoPrev">?</span>`}
+$("#fFoto").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0];if(!f)return;
+  const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{
+    const c=document.createElement("canvas"),z=180;c.width=z;c.height=z;const s=Math.min(im.width,im.height);
+    c.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,z,z);
+    foto=c.toDataURL("image/jpeg",.78);showPreview()};
+    im.onerror=()=>toast("Deze foto kunnen we niet lezen. Probeer een JPG of PNG.");im.src=rd.result};
+  rd.readAsDataURL(f);
+});
+function fillForm(){
+  if(formFilled||!S.loaded.guests||S.contact===undefined)return;formFilled=true;
+  if(S.contact?.email)$("#fMail").value=S.contact.email;
+  const g=myId&&S.guests[myId];if(!g)return;
+  $("#fNick").value=g.nick||"";setKomt(g.komt||"ja");setAllergy(g.allergie||"");foto=g.foto||"";showPreview();
+  $("#fSave").textContent="Bijwerken";$("#fRemove").hidden=false;$("#formIntro").textContent="Je staat op de lijst. Pas hier aan wat nodig is.";
+}
+$("#rsvp").addEventListener("submit",async e=>{
+  e.preventDefault();if(!canWrite())return;
+  const nick=$("#fNick").value.trim(),mail=$("#fMail").value.trim(),st=$("#fStatus");
+  if(!nick){st.textContent="Vul je spelersnaam in.";$("#fNick").focus();return}
+  if(komt!=="nee"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){st.textContent="Vul een geldig e-mailadres in, dan krijg je op de dag zelf de link om in te checken.";$("#fMail").focus();return}
+  const alg=allergy==="__own"?$("#fAllergyOwn").value.trim():allergy;
+  const g={nick,komt,allergie:alg,foto,ts:S.guests[myId]?.ts||Date.now()};
+  st.textContent="Bezig…";
+  try{await write("guests/"+myId,()=>db.doc("guests/"+myId).set(g));
+    if(mail)await write("contacts/"+myId,()=>db.doc("contacts/"+myId).set({email:mail,nick,ts:Date.now()}));st.textContent="";
+    if(komt==="ja")window.__sfx("levelup");toast(komt==="ja"?"Player joined! Tot dan.":komt==="nee"?"Jammer! Je afmelding is bewaard.":"Genoteerd als misschien.");
+    $("#fSave").textContent="Bijwerken";$("#fRemove").hidden=false}catch(err){st.textContent=""}
+});
+const fr=$("#fRemove");
+fr.onclick=async()=>{
+  if(!fr.dataset.sure){fr.dataset.sure=1;fr.textContent="Zeker?";return}
+  delete fr.dataset.sure;fr.textContent="Uitschrijven";
+  try{await write("guests/"+myId,()=>db.doc("guests/"+myId).delete());await write("contacts/"+myId,()=>db.doc("contacts/"+myId).delete());toast("Je bent uitgeschreven.");fr.hidden=true;$("#fSave").textContent="Opslaan"}catch(e){}
+};
+function renderPlayers(){
+  const list=Object.entries(S.guests).sort((a,b)=>(a[1].ts||0)-(b[1].ts||0));
+  const yes=list.filter(([,g])=>g.komt==="ja"),maybe=list.filter(([,g])=>g.komt==="misschien");
+  const days=S.event.datum?Math.max(0,Math.ceil((new Date(S.event.datum+"T00:00")-new Date(new Date().toDateString()))/864e5)):"–";
+  $("#stats").innerHTML=`<div><b>${yes.length}</b><span>komen</span></div><div><b>${maybe.length}</b><span>misschien</span></div><div><b>${days}</b><span>dagen te gaan</span></div>`;
+  const order=[...yes,...maybe,...list.filter(([,g])=>g.komt==="nee")];
+  const hv=(s,salt)=>{let h=2166136261;for(const ch of s+salt)h=Math.imul(h^ch.charCodeAt(0),16777619);return 35+Math.abs(h)%65};
+  const stat=(l,v)=>`<div class="stat"><span>${l}<em>${v}</em></span><i><b style="width:${v}%"></b></i></div>`;
+  $("#players").innerHTML=list.length?order.map(([id,g])=>`<div class="fighter ${esc(g.komt)}">${id===myId?'<span class="me">Jij</span>':""}
+    ${g.foto?`<img class="pic" src="${esc(g.foto)}" alt="">`:`<span class="pic">${esc((g.nick||"?").trim().charAt(0).toUpperCase()||"?")}</span>`}
+    <span class="fname">${esc(g.nick||"Speler")}</span>
+    <span class="tag ${esc(g.komt)}" style="align-self:flex-start">${g.komt==="ja"?"Ready":g.komt==="nee"?"Out":"Misschien"}</span>
+    ${stat("Honger",hv(id,"h"))}${stat("Grill-skills",hv(id,"g"))}${stat("Vleeskennis",hv(id,"v"))}
+    ${g.allergie?`<span class="weak">Zwakte: ${esc(g.allergie)}</span>`:""}</div>`).join("")
+    :`<p class="note">Nog geen spelers. Druk op start en wees de eerste.</p>`;
+  window.__ghosts=yes.map(([,g])=>g.foto).filter(Boolean);
+}
+
+/* ================= CHECK-IN ================= */
+let pieceFilled=false;
+function myNr(){for(const [n,d] of Object.entries(S.nummers))if(d.uid===myId)return +n;return null}
+function fillPiece(){
+  if(pieceFilled||S.piece===undefined)return;pieceFilled=true;const x=S.piece;if(!x)return;
+  $("#pDeel").value=x.deel==="ander"?"ander":(x.deel?x.deel+"|"+(x.deelVrij||""):"");if(!$("#pDeel").value&&x.deel)$("#pDeel").value="ander";$("#pVrij").value=x.deel==="ander"?(x.deelVrij||""):"";$("#pVrijWrap").hidden=x.deel!=="ander";
+  $("#pRas").value=x.ras||"";$("#pSlager").value=x.slager||"";$("#pPrijs").value=x.prijs||"";$("#pGewicht").value=x.gewicht||"";$("#pVerhaal").value=x.verhaal||"";
+  $("#pSave").textContent="Bijwerken";
+}
+function renderMyNr(){const n=myNr();$("#myNr").hidden=!n;if(n)$("#myNrVal").textContent=n}
+async function claimNumber(){
+  if(myNr())return myNr();
+  for(let n=1;n<=80;n++){
+    if(S.nummers[n]?.uid)continue;
+    const ref=db.doc("nummers/"+n);
+    try{const got=await db.runTransaction(async tx=>{const d=await tx.get(ref);if(d.exists)return false;tx.set(ref,{uid:myId,ts:Date.now()});return true});
+      if(got){S.nummers={...S.nummers,[n]:{uid:myId}};return n}}catch(e){}
+  }
+  return null;
+}
+$("#pieceForm").addEventListener("submit",async e=>{
+  e.preventDefault();if(!canWrite())return;const st=$("#pStatus");
+  if(!$("#pDeel").value){st.textContent="Kies welk stuk je meebracht.";return}
+  const [pk,pn]=$("#pDeel").value.split("|");const x={deel:pk,deelVrij:pk==="ander"?$("#pVrij").value.trim():(pn||""),ras:$("#pRas").value.trim(),slager:$("#pSlager").value.trim(),
+    prijs:+$("#pPrijs").value||0,gewicht:+$("#pGewicht").value||0,verhaal:$("#pVerhaal").value.trim(),ts:Date.now()};
+  st.textContent="Bezig…";
+  try{await write("pieces/"+myId,()=>db.doc("pieces/"+myId).set(x));S.piece=x;
+    const n=await claimNumber();st.textContent="";renderMyNr();$("#pSave").textContent="Bijwerken";
+    toast(n?"Ingecheckt! Jouw nummer is "+n:"Ingecheckt.");renderCard(true)}catch(err){st.textContent=""}
+});
+
+/* ================= PROEFKAART ================= */
+let mine={},mineInit=false,cardKey="";
+const CRIT=[["s","Smaak",3],["m","Malsheid",2],["j","Sappigheid",2],["v","Vet & korst",1]];
+const nrs=()=>Object.keys(S.nummers).filter(n=>S.nummers[n]?.uid).map(Number).sort((a,b)=>a-b);
+function renderCard(force){
+  if(!isDay())return;
+  const needNick=myId&&!S.guests[myId];$("#nickWrap").hidden=!needNick;
+  const list=nrs(),me=myNr(),key=JSON.stringify([list,me]);
+  if(!force&&key===cardKey){renderProgress();return}cardKey=key;
+  if(!myId){$("#pieces").innerHTML=`<p class="note">Even geduld, de pagina maakt verbinding.</p>`;return}
+  if(!list.length){$("#pieces").innerHTML=`<p class="note">Zodra iemand incheckt, verschijnt het eerste nummer hier.</p>`;return}
+  const opts=`<option value="">Welk deel denk je?</option>`+ORDER.map(k=>`<option value="${k}">${CUTS[k].n}</option>`).join("");
+  $("#pieces").innerHTML=list.map(n=>{const it=mine[n]||{},own=n===me;return `<div class="piece${own?" me":""}">
+    <div class="top"><span class="pnum">#${n}</span>${own?'<span class="tag nee">Jouw stuk</span>':`<span class="ptot" id="pt${n}">${full(it)?w(it)+"/80":"--/80"}</span>`}</div>
+    ${own?`<p class="note">Je eigen stuk scoor je niet.</p>`:CRIT.map(([k,l,x])=>`<div class="crit${it[k]?"":" unset"}"><span>${l} <small>×${x}</small></span>
+      <input type="range" min="1" max="10" step="1" id="r${n}${k}" value="${it[k]||5}" data-nr="${n}" data-k="${k}" aria-label="${l} nummer ${n}">
+      <output id="o${n}${k}">${it[k]||"–"}</output></div>`).join("")+
+    `<select id="g${n}" data-nr="${n}" aria-label="Gok het deel voor nummer ${n}">${opts}</select>
+     <input id="x${n}" data-nr="${n}" data-k="x" maxlength="60" placeholder="Notitie, bv. boterig" value="${esc(it.x||"")}" aria-label="Notitie nummer ${n}">`}
+    <span class="note" id="pp${n}"></span></div>`}).join("");
+  list.forEach(n=>{const s=$("#g"+n);if(s)s.value=(mine[n]||{}).g||""});
+  renderProgress();
+}
+function saveMine(){
+  if(!canWrite())return;
+  const nick=S.guests[myId]?.nick||$("#scorerNick").value.trim()||"Proever";
+  debounced("scores/"+myId,()=>db.doc("scores/"+myId).set({nick,items:mine}));
+}
+$("#scorerNick").addEventListener("input",saveMine);
+$("#pieces").addEventListener("input",e=>{
+  const t=e.target,n=t.dataset.nr,k=t.dataset.k;if(!n||!k)return;
+  mine[n]={...(mine[n]||{}),[k]:t.type==="range"?+t.value:t.value};
+  if(t.type==="range"){$("#o"+n+k).textContent=t.value;t.closest(".crit").classList.remove("unset")}
+  const pt=$("#pt"+n);if(pt)pt.textContent=full(mine[n])?w(mine[n])+"/80":"--/80";
+  saveMine();
+});
+$("#pieces").addEventListener("change",e=>{if(e.target.tagName==="SELECT"){const n=e.target.dataset.nr;mine[n]={...(mine[n]||{}),g:e.target.value};saveMine()}});
+function renderProgress(){nrs().forEach(n=>{const el=$("#pp"+n);if(el){const c=Object.values(S.scores).filter(d=>full(d.items?.[n])).length;el.textContent=c?`${c} proever${c>1?"s":""} klaar`:""}})}
+
+/* ================= ONTHULLING ================= */
+const rb=$("#revealBtn");
+rb.onclick=async()=>{
+  if(!isOwner)return;
+  if(!rb.dataset.sure){rb.dataset.sure=1;rb.textContent="Zeker? Klik nogmaals";return}
+  delete rb.dataset.sure;
+  try{
+    if(S.event.phase==="onthulling"){await write("event/reveal",()=>db.doc("event/reveal").delete());await write("event/main",()=>db.doc("event/main").set({...S.event,phase:"avond"}));return}
+    const ps=await db.collection("pieces").get();const X=Object.fromEntries(ps.docs.map(d=>[d.id,d.data()]));
+    const items=nrs().map(n=>{const gid=S.nummers[n].uid,x=X[gid]||{},g=S.guests[gid]||{};
+      return {nr:n,gid,nick:g.nick||S.scores[gid]?.nick||"?",deel:x.deel||"",deelVrij:x.deelVrij||"",ras:x.ras||"",slager:x.slager||"",prijs:+x.prijs||0,verhaal:x.verhaal||""}});
+    await write("event/reveal",()=>db.doc("event/reveal").set({items,ts:Date.now()}));
+    await write("event/main",()=>db.doc("event/main").set({...S.event,phase:"onthulling"}));
+    toast("De uitslag is onthuld!");$("#uitslag").scrollIntoView();
+  }catch(e){}
+};
+function results(){
+  const R=S.reveal;if(!R||!R.items)return null;
+  const pieces=R.items.map(p=>{const ss=[];for(const [sid,d] of Object.entries(S.scores)){if(sid===p.gid)continue;const it=d.items?.[p.nr];if(full(it))ss.push(w(it))}
+    return {...p,avg:ss.length?ss.reduce((a,b)=>a+b,0)/ss.length:0,n:ss.length}});
+  const ranked=pieces.filter(p=>p.n).sort((a,b)=>b.avg-a.avg),priced=ranked.filter(p=>p.prijs>0);
+  const smart=[...priced].sort((a,b)=>b.avg/b.prijs-a.avg/a.prijs)[0],under=priced.filter(p=>p.prijs<25)[0];
+  const tasters=Object.entries(S.scores).map(([sid,d])=>{let ok=0,tried=0;for(const p of pieces){if(p.gid===sid||!ORDER.includes(p.deel))continue;const g=d.items?.[p.nr]?.g;if(g){tried++;if(g===p.deel)ok++}}
+    return {nick:S.guests[sid]?.nick||d.nick||"Proever",ok,tried}}).filter(t=>t.tried).sort((a,b)=>b.ok-a.ok);
+  return {pieces,ranked,smart,under,tasters};
+}
+const pname=p=>`${esc(cutName(p.deel,p.deelVrij))} van ${esc(p.nick)}`;
+function renderReveal(){
+  const show=S.event.phase==="onthulling"&&S.reveal;$("#uitslag").hidden=!show;if(!show)return;
+  const r=results(),medal=["1st","2nd","3rd"];
+  $("#podium").innerHTML=r.ranked.slice(0,3).map((p,i)=>`<div><span class="l">${medal[i]}</span><span class="rk">#${p.nr}</span><strong>${pname(p)}</strong><span class="ptot">${p.avg.toFixed(1)} / 80</span></div>`).join("")||`<p class="note">Nog geen scores.</p>`;
+  const best=r.ranked[0],tp=r.tasters[0];
+  const cell=(l,v,x)=>`<div><b>${l}</b><strong>${v||"—"}</strong>${x?`<span class="note">${x}</span>`:""}</div>`;
+  $("#awards").innerHTML=cell("Het Gouden Mes",best&&pname(best),best&&best.avg.toFixed(1)+" punten")
+    +cell("De Slimme Slager",r.smart&&pname(r.smart),r.smart&&(r.smart.avg/r.smart.prijs).toFixed(2)+" punten per €/kg")
+    +cell("De Underdog",r.under&&pname(r.under),r.under&&r.under.avg.toFixed(1)+" punten aan €"+r.under.prijs+"/kg")
+    +cell("Beste Proever",tp&&tp.ok?esc(tp.nick):"",tp&&tp.ok?`${tp.ok} van ${tp.tried} juist`:"");
+  const rows=[...r.ranked,...r.pieces.filter(p=>!p.n)];
+  $("#ranking").innerHTML=`<thead><tr><th>Rank</th><th>#</th><th>Stuk</th><th>Van</th><th>Ras</th><th>Slager</th><th>€/kg</th><th>Score</th></tr></thead><tbody>`+
+    rows.map((p,i)=>`<tr><td>${p.n?i+1:"–"}</td><td>${p.nr}</td><td><b>${esc(cutName(p.deel,p.deelVrij))}</b></td><td>${esc(p.nick)}</td><td>${esc(p.ras)}</td><td>${esc(p.slager)}</td><td>${p.prijs?"€"+p.prijs:""}</td><td class="ptot">${p.n?p.avg.toFixed(1):"–"}</td></tr>`).join("")+`</tbody>`;
+  $("#stories").innerHTML=r.pieces.filter(p=>p.verhaal).map(p=>`<div class="wish"><span class="l">#${p.nr} · ${pname(p)}</span><p>${esc(p.verhaal)}</p></div>`).join("");
+  $("#tasters").innerHTML=r.tasters.length?`<div class="scroll"><table><thead><tr><th>Proever</th><th>Juist</th></tr></thead><tbody>${r.tasters.map(t=>`<tr><td>${esc(t.nick)}</td><td class="ptot">${t.ok}/${t.tried}</td></tr>`).join("")}</tbody></table></div>`:`<p class="note">Niemand heeft een gok gewaagd.</p>`;
+}
+
+/* ================= BOOT ================= */
+function renderAll(){renderEvent();renderStatus();renderCard();renderReveal();renderMyNr()}
+renderPlayers();renderAll();
+(async()=>{
+  const CFG=window.STEAKOFF_CONFIG||{};
+  S.event={...(CFG.event||{})};renderAll();
+  const showSetup=new URLSearchParams(location.search).has("gastheer");
+  if(!window.firebase||!CFG.firebase||/PLAK/.test(String(CFG.firebase.apiKey||""))){statusMsg="Deze pagina is nog niet gekoppeld aan Firebase. Vul config.js in (zie README).";renderStatus();return}
+  try{firebase.initializeApp(CFG.firebase);const cred=await firebase.auth().signInAnonymously();myId=cred.user.uid}
+  catch(e){statusMsg="Verbinden lukte niet. Herlaad de pagina. (Staat 'Anonymous' aan in Firebase Authentication?)";renderStatus();return}
+  isOwner=!!CFG.ownerUid&&myId===CFG.ownerUid;
+  db=firebase.firestore();statusMsg="";
+  if(isOwner||showSetup){$("#host").hidden=false;$("#hostUid").textContent=myId;$("#hostMails").hidden=!isOwner;$("#hostSetup").hidden=isOwner}
+  const slow=setTimeout(()=>{statusMsg="De gegevens laden traag. Controleer je verbinding.";renderStatus()},10000);
+  const ok=()=>{clearTimeout(slow);if(statusMsg.startsWith("De gegevens laden")){statusMsg=""};renderStatus()};
+  db.doc("event/main").onSnapshot(s=>{ok();S.event={...(CFG.event||{}),...(s.exists?s.data():{})};renderAll();renderPlayers()},errH);
+  db.doc("event/reveal").onSnapshot(s=>{S.reveal=s.exists?s.data():null;renderReveal()},errH);
+  db.collection("guests").onSnapshot(q=>{ok();S.loaded.guests=true;S.guests=Object.fromEntries(q.docs.map(d=>[d.id,d.data()]));renderPlayers();fillForm();renderCard();renderReveal()},errH);
+  db.collection("nummers").onSnapshot(q=>{S.nummers=Object.fromEntries(q.docs.map(d=>[d.id,d.data()]));renderMyNr();renderCard()},errH);
+  db.collection("scores").onSnapshot(q=>{S.scores=Object.fromEntries(q.docs.map(d=>[d.id,d.data()]));
+    if(!mineInit&&myId){mineInit=true;mine=JSON.parse(JSON.stringify(S.scores[myId]?.items||{}));if(S.scores[myId]?.nick)$("#scorerNick").value=S.scores[myId].nick;renderCard(true)}else renderProgress();renderReveal()},errH);
+  if(isOwner)db.collection("contacts").onSnapshot(q=>{const mails=q.docs.filter(d=>d.data().email&&S.guests[d.id]?.komt!=="nee").map(d=>d.data().email);
+    $("#hostMailList").value=mails.join(", ");$("#hostMailCount").textContent=mails.length},errH);
+  try{const c=await db.doc("contacts/"+myId).get();S.contact=c.exists?c.data():null}catch(e){S.contact=null}fillForm();
+  try{const d=await db.doc("pieces/"+myId).get();S.piece=d.exists?d.data():null}catch(e){S.piece=null}fillPiece();
+  renderAll();
+})();
+$("#hostCopy").onclick=()=>{const t=$("#hostMailList");navigator.clipboard.writeText(t.value).then(()=>toast("E-mailadressen gekopieerd")).catch(()=>{t.select();toast("Geselecteerd, kopieer handmatig")})};
+$("#uidCopy").onclick=()=>{navigator.clipboard.writeText(myId||"").then(()=>toast("ID gekopieerd")).catch(()=>toast("Selecteer en kopieer het ID handmatig"))};
+</script>
+
+</body>
+</html>
